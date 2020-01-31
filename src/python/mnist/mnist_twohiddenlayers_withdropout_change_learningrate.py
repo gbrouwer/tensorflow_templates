@@ -2,6 +2,7 @@ import tensorflow as tf
 import numpy as np
 import os
 from tensorflow import keras
+from tensorflow.keras.optimizers import SGD
 import matplotlib.pyplot as plt
 
 #------------------------------------------------------------------------
@@ -64,10 +65,10 @@ def buildModel(NB_CLASSES,N_HIDDEN,DROPOUT,inputSize):
 	return model
 
 #------------------------------------------------------------------------
-def compileModel(model):
+def compileModel(model,OPTMIZER):
     
     #Compile
-    model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['accuracy'])
+    model.compile(optimizer=OPTMIZER, loss='categorical_crossentropy', metrics=['accuracy'])
 
     #Return
     return model
@@ -87,7 +88,8 @@ if __name__ == '__main__':
     N_HIDDEN = 128
     VALIDATION_SPLIT=0.2
     DROPOUT = 0.3
-    
+    OPTMIZER = SGD(lr=0.001)
+
 	#For reproducibility
     np.random.seed(1671)
 
@@ -107,7 +109,7 @@ if __name__ == '__main__':
     model = buildModel(NB_CLASSES,N_HIDDEN,DROPOUT,Xtrain.shape[1])
 
     #Compile Model
-    model = compileModel(model)
+    model = compileModel(model,OPTMIZER)
 
     #Training the model
     history = model.fit(Xtrain, Ytrain,batch_size=BATCH_SIZE, epochs=EPOCHS, verbose=VERBOSE, validation_split=VALIDATION_SPLIT)
@@ -130,7 +132,7 @@ if __name__ == '__main__':
     plt.xlabel('epoch',fontsize=18)
     plt.ylabel('loss',fontsize=18)
     plt.grid()
-    plt.savefig('src/python/densenetworks_mnist/mnist_twohiddenlayers_withdropout_adam.png')
+    plt.savefig('src/python/mnist/mnist_twohiddenlayers_withdropout_change_learningrate.png')
 
     #Evaluate the model
     testLoss, testAcc = model.evaluate(Xtest, Ytest)

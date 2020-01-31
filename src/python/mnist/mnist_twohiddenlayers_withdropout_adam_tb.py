@@ -1,8 +1,9 @@
 import tensorflow as tf
 import numpy as np
 import os
-from tensorflow import keras
 import matplotlib.pyplot as plt
+from tensorflow import keras
+from tensorflow.keras.callbacks import TensorBoard
 
 #------------------------------------------------------------------------
 def loadMNIST():
@@ -49,21 +50,25 @@ def oneHotEncoding(Ytrain,Ytest,NB_CLASSES):
     return Ytrain,Ytest
 
 #------------------------------------------------------------------------
-def buildModel(NB_CLASSES,inputSize):
+def buildModel(NB_CLASSES,N_HIDDEN,DROPOUT,inputSize):
     
     #Build Model
-    model = tf.keras.models.Sequential()
-    model.add(keras.layers.Dense(NB_CLASSES,input_shape=(inputSize,),name='dense_layer', activation='softmax'))
-    model.summary()
+	model = tf.keras.models.Sequential()
+	model.add(keras.layers.Dense(N_HIDDEN,input_shape=(inputSize,),name='dense_layer', activation='relu'))
+	model.add(keras.layers.Dropout(DROPOUT))
+	model.add(keras.layers.Dense(N_HIDDEN,name='dense_layer_2', activation='relu'))
+	model.add(keras.layers.Dropout(DROPOUT))
+	model.add(keras.layers.Dense(NB_CLASSES,name='dense_layer_3', activation='softmax'))
+	model.summary()
     
     #Return
-    return model
+	return model
 
 #------------------------------------------------------------------------
 def compileModel(model):
     
     #Compile
-    model.compile(optimizer='SGD', loss='categorical_crossentropy', metrics=['accuracy'])
+    model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
     #Return
     return model
@@ -74,15 +79,20 @@ if __name__ == '__main__':
     #Surpress warning
     os.system('clear')
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+	
+    #Tensorboard
+    tensorboard_callback = TensorBoard('.logdir')
 
     #Network and training parameters
     EPOCHS = 50
     BATCH_SIZE = 128
     VERBOSE = 1
     NB_CLASSES = 10
+    N_HIDDEN = 128
     VALIDATION_SPLIT=0.2
-
-    #For reproducibility
+    DROPOUT = 0.3
+    
+	#For reproducibility
     np.random.seed(1671)
 
     #Loading MNIST dataset
@@ -98,13 +108,13 @@ if __name__ == '__main__':
     Ytrain,Ytest = oneHotEncoding(Ytrain,Ytest,NB_CLASSES)
 
     #Build Model
-    model = buildModel(NB_CLASSES,Xtrain.shape[1])
+    model = buildModel(NB_CLASSES,N_HIDDEN,DROPOUT,Xtrain.shape[1])
 
     #Compile Model
     model = compileModel(model)
 
     #Training the model
-    history = model.fit(Xtrain, Ytrain,batch_size=BATCH_SIZE, epochs=EPOCHS, verbose=VERBOSE, validation_split=VALIDATION_SPLIT)
+    history = model.fit(Xtrain, Ytrain,batch_size=BATCH_SIZE, epochs=EPOCHS, verbose=VERBOSE, validation_split=VALIDATION_SPLIT,callbacks=[tensorboard_callback])
     loss = history.history['loss']
     loss_val = history.history['val_loss']
     ac = history.history['accuracy']
@@ -124,7 +134,7 @@ if __name__ == '__main__':
     plt.xlabel('epoch',fontsize=18)
     plt.ylabel('loss',fontsize=18)
     plt.grid()
-    plt.savefig('src/python/densenetworks_mnist/minst_singlelater.png')
+    plt.savefig('src/python/mnist/mnist_twohiddenlayers_withdropout_adam_tb.png')
 
     #Evaluate the model
     testLoss, testAcc = model.evaluate(Xtest, Ytest)

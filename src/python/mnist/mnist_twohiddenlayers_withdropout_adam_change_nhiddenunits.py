@@ -81,10 +81,10 @@ if __name__ == '__main__':
 
     #Network and training parameters
     EPOCHS = 50
-    BATCH_SIZE = 256
+    BATCH_SIZE = 128
     VERBOSE = 1
     NB_CLASSES = 10
-    N_HIDDEN = 128
+    N_HIDDEN = 256
     VALIDATION_SPLIT=0.2
     DROPOUT = 0.3
     
@@ -130,7 +130,7 @@ if __name__ == '__main__':
     plt.xlabel('epoch',fontsize=18)
     plt.ylabel('loss',fontsize=18)
     plt.grid()
-    plt.savefig('src/python/densenetworks_mnist/mnist_twohiddenlayers_withdropout_adam_bigger_batchsize.png')
+    plt.savefig('src/python/mnist/mnist_twohiddenlayers_withdropout_adam_change_nhiddenunits.png')
 
     #Evaluate the model
     testLoss, testAcc = model.evaluate(Xtest, Ytest)

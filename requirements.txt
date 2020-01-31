@@ -9,4 +9,5 @@ opencv-contrib-python
 dlib
 tqdm
 tensorflow
+tensorflow_datasets
 keras

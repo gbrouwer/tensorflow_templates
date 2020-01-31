@@ -67,7 +67,7 @@ def buildModel(NB_CLASSES,N_HIDDEN,DROPOUT,inputSize):
 def compileModel(model):
     
     #Compile
-    model.compile(optimizer='RMSProp', loss='categorical_crossentropy', metrics=['accuracy'])
+    model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
     #Return
     return model
@@ -81,7 +81,7 @@ if __name__ == '__main__':
 
     #Network and training parameters
     EPOCHS = 50
-    BATCH_SIZE = 128
+    BATCH_SIZE = 256
     VERBOSE = 1
     NB_CLASSES = 10
     N_HIDDEN = 128
@@ -130,7 +130,7 @@ if __name__ == '__main__':
     plt.xlabel('epoch',fontsize=18)
     plt.ylabel('loss',fontsize=18)
     plt.grid()
-    plt.savefig('src/python/densenetworks_mnist/mnist_twohiddenlayers_withdropout_rmsprop.png')
+    plt.savefig('src/python/mnist/mnist_twohiddenlayers_withdropout_adam_bigger_batchsize.png')
 
     #Evaluate the model
     testLoss, testAcc = model.evaluate(Xtest, Ytest)
