@@ -8,3 +8,5 @@ opencv-python
 opencv-contrib-python
 dlib
 tqdm
+tensorflow
+keras
