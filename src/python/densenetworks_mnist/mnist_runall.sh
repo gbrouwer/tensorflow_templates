@@ -1,0 +1,9 @@
+/usr/local/bin/python3 /Users/gbrouwer/Projects/tensorflow_template_models/src/python/densenetworks_mnist/mnist_singlelayer.py
+/usr/local/bin/python3 /Users/gbrouwer/Projects/tensorflow_template_models/src/python/densenetworks_mnist/mnist_twohiddenlayers.py
+/usr/local/bin/python3 /Users/gbrouwer/Projects/tensorflow_template_models/src/python/densenetworks_mnist/mnist_twohiddenlayers_withdropout.py
+/usr/local/bin/python3 /Users/gbrouwer/Projects/tensorflow_template_models/src/python/densenetworks_mnist/mnist_twohiddenlayers_withdropout_adam.py
+/usr/local/bin/python3 /Users/gbrouwer/Projects/tensorflow_template_models/src/python/densenetworks_mnist/mnist_twohiddenlayers_withdropout_adam_bigger_batchsize.py
+/usr/local/bin/python3 /Users/gbrouwer/Projects/tensorflow_template_models/src/python/densenetworks_mnist/mnist_twohiddenlayers_withdropout_adam_change_nhiddenunits.py
+/usr/local/bin/python3 /Users/gbrouwer/Projects/tensorflow_template_models/src/python/densenetworks_mnist/mnist_twohiddenlayers_withdropout_adam_tb.py
+/usr/local/bin/python3 /Users/gbrouwer/Projects/tensorflow_template_models/src/python/densenetworks_mnist/mnist_twohiddenlayers_withdropout_change_learningrate.py
+/usr/local/bin/python3 /Users/gbrouwer/Projects/tensorflow_template_models/src/python/densenetworks_mnist/mnist_twohiddenlayers_withdropout_rmsprop.py
