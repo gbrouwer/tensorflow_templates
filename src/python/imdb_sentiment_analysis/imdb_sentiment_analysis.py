@@ -30,6 +30,7 @@ def decipherReview(review,worddict):
 		if (item > 0):
 			wordlist.append(worddict[item])
 	print(wordlist)
+	
 #------------------------------------------------------------------------
 def buildModel(n_words,dim_embedding):
 
